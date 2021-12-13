@@ -1,0 +1,15 @@
+{
+  "name": "cabbage_trello",
+  "version": "1.0.0",
+  "description": "a small cabbage ",
+  "main": "index.js",
+  "repository": "https://github.com/yulinchen21/cabbage_trello.git",
+  "author": "yulin <yulin.chen@thoughtworks.com>",
+  "license": "MIT",
+  "scripts": {
+  "build" : "parcel build src/html/*.html"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.12.5"
+  }
+}
