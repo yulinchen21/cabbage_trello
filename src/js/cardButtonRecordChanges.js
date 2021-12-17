@@ -5,7 +5,7 @@ t.get(context.card, 'shared', 'demandChangeCount').then(demandChangeCountInRespo
     demandChangeCount = demandChangeCountInResponse ? demandChangeCountInResponse : 0;
     showDemandChangeCount(`total changes: ${demandChangeCount}`);
 });
-t.cards('labels', 'id').then(function (cards) {
+t.cards('all').then(function (cards) {
     console.log('t.cards(\'all\') res: ', JSON.stringify(cards, null, 2));
 });
 t.getAll()
