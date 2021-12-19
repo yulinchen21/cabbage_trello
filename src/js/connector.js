@@ -29,19 +29,8 @@ window.TrelloPowerUp.initialize(
             return getBoardButton(t, opt);
         },
         'card-badges': function () {
-            return [
-                {
-                    dynamic: function () {
-                        return {
-                            text: "Dynamic" + (Math.random() * 100).toFixed(0).toString(),
-                            color: "green",
-                            refresh: 10,
-                        };
-                    },
-                },
-                {
-                    text: "Static",
-                    color: null,
+            return [{
+                    text: "card-badges",
                 }];
         },
         'card-buttons': cardButtons,
