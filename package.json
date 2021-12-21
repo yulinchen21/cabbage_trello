@@ -7,13 +7,21 @@
   "author": "yulin <yulin.chen@thoughtworks.com>",
   "license": "MIT",
   "scripts": {
-    "build": "parcel build src/html/*.html"
+    "build": "parcel build src/html/*.html",
+    "test": "jest"
   },
+  "type": "module",
   "devDependencies": {
+    "@babel/core": "^7.16.5",
+    "@babel/preset-env": "^7.16.5",
+    "babel-jest": "^27.4.5",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
+    "jest": "^27.4.5",
     "parcel-bundler": "^1.12.5",
     "typescript": "^4.5.4"
   },
   "dependencies": {
+    "diff": "^5.0.0",
     "echarts": "^5.2.2",
     "lodash": "^4.17.21"
   }

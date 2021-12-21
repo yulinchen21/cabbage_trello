@@ -1,3 +1,4 @@
+
 const t = window.TrelloPowerUp.iframe();
 const context = t.getContext();
 let demandChangeCount;
@@ -15,17 +16,19 @@ t.getAll()
 
 onRecordBtnClick = () => {
     demandChangeCount = demandChangeCount + 1;
-    console.log("demandChangeCount is increased, now its value is: ", demandChangeCount);
+    console.log('demandChangeCount is increased, now its value is: ', demandChangeCount);
     showDemandChangeCount(`total changes: ${demandChangeCount}`);
 }
 
 onSaveBtnClick = () => {
     t.set(context.card, 'shared', {demandChangeCount});
-    console.log("demandChangeCount is saved!");
+    const {diffChars} = require('../utils/character')
+    console.log('diff of \'1asd\',\'12\'', diffChars('今晚提出一个新的方案','今晚提出一个新的方案, 不然明天讨论没东西可说'));
+    console.log('diff of \'1asd\',\'12\'', diffChars('今晚提出一个新的方案','今晚提出一个'));
     showDemandChangeCount(`total changes: ${demandChangeCount} (save successfully!)`);
 }
 
 showDemandChangeCount = demandChangeCount => {
-    let element = document.getElementById("demandChangeCount");
+    let element = document.getElementById('demandChangeCount');
     element.innerHTML = demandChangeCount;
 }
