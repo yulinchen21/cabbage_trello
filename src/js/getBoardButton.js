@@ -3,7 +3,7 @@ export function getBoardButton(t, opts) {
         text: 'Requirement Changes',
         condition: 'always',
         callback: function (t, opt) {
-            t.popup({
+            t.modal({
                 title: 'Requirement Change Analysis',
                 url: './requirementChangeAnalysis.html',
             })

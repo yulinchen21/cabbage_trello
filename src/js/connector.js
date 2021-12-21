@@ -39,13 +39,11 @@ window.TrelloPowerUp.initialize(
                 .then(res => {
                     console.log('requirementChangeCount in res: ', res);
                     requirementChangeCount = res ? res : 0;
-                    return [
-                        {
+                    return [{
                             title: "Requirement Changes",
                             text: requirementChangeCount,
                             color: 'red',
-                        },
-                    ];
+                        }];
                 })
         },
     }
