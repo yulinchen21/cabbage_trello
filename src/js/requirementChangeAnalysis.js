@@ -57,7 +57,7 @@ startAnalysis = () => {
     option && myChart.setOption(option);
 
     option.dataset.dimensions = ['labels', ...labels];
-    option.dataset.source = ['labels', ...source];
+    option.dataset.source = source;
     console.log('option: ', option);
 }
 
