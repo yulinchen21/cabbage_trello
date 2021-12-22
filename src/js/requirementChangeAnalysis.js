@@ -53,7 +53,7 @@ startAnalysis = () => {
     console.log('source: ', source);
     console.log('labels: ', labels);
 
-    option.dataset.dimensions = ['label', ...labels];
+    option.dataset.dimensions = ['label', 'cardCount', 'changeCount'];
     option.dataset.source = source;
     option.series = [{ type: 'bar' }, { type: 'bar' }];
     console.log('option: ', option);
