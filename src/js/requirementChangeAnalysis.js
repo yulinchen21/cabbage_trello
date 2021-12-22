@@ -58,6 +58,7 @@ startAnalysis = () => {
     console.log('labels: ', labels);
     option.dataset.dimensions = ['labels', ...labels];
     option.dataset.source = ['labels', ...source];
+    console.log('option: ', option);
 }
 
 calculateRequirementChangeCountAsSource = dataSet => {
