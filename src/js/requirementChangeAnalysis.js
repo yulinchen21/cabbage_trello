@@ -1,3 +1,4 @@
+
 let cardsInfo = [];
 let labelSet = [];
 let dataSet = {};
@@ -27,6 +28,9 @@ startAnalysis = () => {
         });
         dataSet = {...dataSet, [label.name]: list};
     });
-    console.log('cardsInfo: ', cardsInfo);
-    console.log('dataSet: ', dataSet);
+    const calculateRequirementChangeCountAsSource = require("../utils/calculateRequirementChangeCount");
+    const source = calculateRequirementChangeCountAsSource(dataSet);
+    const labels = _.map(source, iteration => iteration.label);
+    console.log('source: ', source);
+    console.log('labels: ', labels);
 }
