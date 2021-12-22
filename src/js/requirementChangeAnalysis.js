@@ -52,7 +52,7 @@ startAnalysis = () => {
         yAxis: {},
         series: [{ type: 'bar' }, { type: 'bar' }, { type: 'bar' }]
     };
-    option.dataset.dimensions = ['labels', ...labels];
+    option.dataset.dimensions = ['label', ...labels];
     option.dataset.source = source;
     option.series = [{ type: 'bar' }, { type: 'bar' }];
     option && myChart.setOption(option);
