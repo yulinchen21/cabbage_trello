@@ -20,7 +20,7 @@ option = {
     },
     xAxis: { type: 'category' },
     yAxis: {},
-    series: [{ type: 'bar' }, { type: 'bar' }, { type: 'bar' }]
+    series: [{ type: 'bar' }, { type: 'bar' }]
 };
 option && myChart.setOption(option);
 
