@@ -29,7 +29,7 @@ startAnalysis = () => {
         dataSet = {...dataSet, [label.name]: list};
     });
     const source = calculateRequirementChangeCountAsSource(dataSet);
-    const labels = _.map(source, iteration => iteration.label);
+    const labels = _.map(labelSet, iteration => iteration.name);
     console.log('source: ', source);
     console.log('labels: ', labels);
 }
