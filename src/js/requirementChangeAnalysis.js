@@ -50,14 +50,12 @@ startAnalysis = () => {
         },
         xAxis: { type: 'category' },
         yAxis: {},
-        // Declare several bar series, each will be mapped
-        // to a column of dataset.source by default.
         series: [{ type: 'bar' }, { type: 'bar' }, { type: 'bar' }]
     };
-    option && myChart.setOption(option);
-
     option.dataset.dimensions = ['labels', ...labels];
     option.dataset.source = source;
+    option.series = [{ type: 'bar' }, { type: 'bar' }];
+    option && myChart.setOption(option);
     console.log('option: ', option);
 }
 
