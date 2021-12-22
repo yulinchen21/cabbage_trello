@@ -9,6 +9,12 @@ var chartDom = document.getElementById('charts');
 var myChart = echarts.init(chartDom);
 var option;
 option = {
+    tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'shadow'
+        }
+    },
     dataset: {
         dimensions: ['product', '2015', '2016', '2017'],
         source: [
