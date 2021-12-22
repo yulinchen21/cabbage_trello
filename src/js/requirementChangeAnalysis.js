@@ -46,6 +46,7 @@ calculateRequirementChangeCountAsSource = dataSet => {
         });
         data = [ ...data, {label: key, cardCount, changeCount}];
     })
+    return data;
 }
 
 var echarts = require('echarts')
