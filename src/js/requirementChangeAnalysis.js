@@ -28,9 +28,22 @@ startAnalysis = () => {
         });
         dataSet = {...dataSet, [label.name]: list};
     });
-    const calculateRequirementChangeCountAsSource = require("../utils/calculateRequirementChangeCount");
     const source = calculateRequirementChangeCountAsSource(dataSet);
     const labels = _.map(source, iteration => iteration.label);
     console.log('source: ', source);
     console.log('labels: ', labels);
+}
+
+calculateRequirementChangeCountAsSource = dataSet => {
+    const _ = require('lodash');
+    let data = [];
+    _.forEach(dataSet, (value, key) => {
+        const cardCount = value.length;
+        let changeCount = 0;
+        _.forEach(value, singleCard => {
+            const singleCount = _.get(singleCard, 'demandChangeCount', 0);
+            changeCount += singleCount;
+        });
+        data = [ ...data, {label: key, cardCount, changeCount}];
+    })
 }
