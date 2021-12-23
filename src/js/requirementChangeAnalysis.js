@@ -18,15 +18,15 @@ option = {
     dataset: {
         dimensions: ['product', '2015', '2016', '2017'],
         source: [
-            { product: 'Matcha Latte', 2015: 43.3, 2016: 85.8, 2017: 93.7 },
-            { product: 'Milk Tea', 2015: 83.1, 2016: 73.4, 2017: 55.1 },
-            { product: 'Cheese Cocoa', 2015: 86.4, 2016: 65.2, 2017: 82.5 },
-            { product: 'Walnut Brownie', 2015: 72.4, 2016: 53.9, 2017: 39.1 }
+            {product: 'Matcha Latte', 2015: 43.3, 2016: 85.8, 2017: 93.7},
+            {product: 'Milk Tea', 2015: 83.1, 2016: 73.4, 2017: 55.1},
+            {product: 'Cheese Cocoa', 2015: 86.4, 2016: 65.2, 2017: 82.5},
+            {product: 'Walnut Brownie', 2015: 72.4, 2016: 53.9, 2017: 39.1}
         ]
     },
-    xAxis: { type: 'category' },
+    xAxis: {type: 'category'},
     yAxis: {},
-    series: [{ type: 'bar' }, { type: 'bar' }]
+    series: [{type: 'bar'}, {type: 'bar'}]
 };
 
 
@@ -35,7 +35,7 @@ t.board('labels').then(res => {
     labelSet = _.filter(res.labels, label => label.name !== '');
     console.log('labelSet: ', labelSet);
 });
-t.cards('id', 'labels', 'name')
+t.cards('id', 'labels', 'name', 'dateLastActivity')
     .then(cards => {
         cards.forEach(cardInfo => {
             t.get(cardInfo.id, 'shared', 'demandChangeCount')
@@ -46,6 +46,15 @@ t.cards('id', 'labels', 'name')
     });
 
 startAnalysis = () => {
+
+    drawPieChart();
+}
+
+drawHistogram = () => {
+
+}
+
+drawPieChart = () => {
     const _ = require('lodash');
     _.forEach(labelSet, label => {
         const list = _.filter(cardsInfo, cardInfo => {
@@ -53,19 +62,55 @@ startAnalysis = () => {
         });
         dataSet = {...dataSet, [label.name]: list};
     });
-    const source = calculateRequirementChangeCountAsSource(dataSet);
-    const labels = _.map(labelSet, iteration => iteration.name);
-    console.log('source: ', source);
-    console.log('labels: ', labels);
-
-    option.dataset.dimensions = ['label', 'cardCount', 'changeCount'];
-    option.dataset.source = source;
-    option.series = [{ type: 'bar' }, { type: 'bar' }];
-    console.log('option: ', option);
+    const data = calculateRequirementChangeCountAndCardCountAsSource(dataSet);
+    option = generatePieChartOption(data);
     myChart.setOption(option);
 }
 
-calculateRequirementChangeCountAsSource = dataSet => {
+generatePieChartOption = data => {
+    const pieChartOption = {
+        tooltip: {
+            trigger: 'item'
+        },
+        legend: {
+            top: '5%',
+            left: 'center'
+        },
+        series: [
+            {
+                name: 'Access From',
+                type: 'pie',
+                radius: ['40%', '70%'],
+                avoidLabelOverlap: false,
+                itemStyle: {
+                    borderRadius: 10,
+                    borderColor: '#fff',
+                    borderWidth: 2
+                },
+                label: {
+                    show: false,
+                    position: 'center'
+                },
+                emphasis: {
+                    label: {
+                        show: true,
+                        fontSize: '40',
+                        fontWeight: 'bold'
+                    }
+                },
+                labelLine: {
+                    show: false
+                },
+                data: [
+                ]
+            }
+        ]
+    };
+    pieChartOption.series[0].data = data;
+    return pieChartOption;
+}
+
+calculateRequirementChangeCountAndCardCountAsSource = dataSet => {
     const _ = require('lodash');
     let data = [];
     _.forEach(dataSet, (value, key) => {
@@ -75,7 +120,7 @@ calculateRequirementChangeCountAsSource = dataSet => {
             const singleCount = _.get(singleCard, 'demandChangeCount', 0);
             changeCount += singleCount;
         });
-        data = [ ...data, {label: key, cardCount, changeCount}];
+        data = [...data, {name: key, value: changeCount}];
     })
     return data;
 }
