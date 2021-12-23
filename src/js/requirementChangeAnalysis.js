@@ -85,6 +85,8 @@ drawHistogram = () => {
 }
 
 generateHistogramOption = source => {
+    const labels = _.drop(source).map(data => data[0]);
+    console.log('labels', labels);
     const histogramOption = {
         legend: {},
         tooltip: {},
