@@ -10,6 +10,8 @@ const _ = require("lodash");
 var chartDom = document.getElementById('charts');
 var myChart = echarts.init(chartDom);
 var option;
+var histogramDom = document.getElementById('histogram');
+var myHistogram = echarts.init(histogramDom);
 option = {
     tooltip: {
         trigger: 'axis',
@@ -75,14 +77,34 @@ drawHistogram = () => {
         console.log('twoWeeksStart: ', twoWeeksStart);
         console.log('twoWeeksEnd: ', twoWeeksEnd);
         console.log('cardCount and changeCount: ', cardCount, changeCount);
-        source = [...source, [twoWeeksStart.toString(), cardCount, changeCount]];
+        source = [...source, [`${twoWeeksStart.format('yyyy/MM/DD')} ~ ${twoWeeksEnd.format('yyyy/MM/DD')}`, cardCount, changeCount]];
     }
     console.log('source: ', source);
-    return source;
+    const histogramOption = generateHistogramOption(source);
+    myHistogram.setOption(histogramOption);
 }
 
-generateHistogramOption = data => {
-
+generateHistogramOption = source => {
+    const histogramOption = {
+        legend: {},
+        tooltip: {},
+        dataset: {
+            source: [
+                ['product', '2015', '2016', '2017'],
+                ['Matcha Latte', 43.3, 85.8, 93.7],
+                ['Milk Tea', 83.1, 73.4, 55.1],
+                ['Cheese Cocoa', 86.4, 65.2, 82.5],
+                ['Walnut Brownie', 72.4, 53.9, 39.1]
+            ]
+        },
+        xAxis: { type: 'category' },
+        yAxis: {},
+        // Declare several bar series, each will be mapped
+        // to a column of dataset.source by default.
+        series: [{ type: 'bar' }, { type: 'bar' }, { type: 'bar' }]
+    };
+    histogramOption.dataset.source = source;
+    return histogramOption;
 }
 
 drawPieChart = () => {
