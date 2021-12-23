@@ -59,8 +59,8 @@ drawHistogram = () => {
     let source = [['cycle', 'cards count', 'changes count']];
     console.log('cardsInfo: ', cardsInfo);
     for (let i = 0; i < 6; i++) {
-        const twoWeeksStart = moment().local().endOf('week').subtract((i + 1) * 13, 'days');
-        const twoWeeksEnd = moment().local().endOf('week').subtract(i * 13, 'days');
+        const twoWeeksStart = moment().local().endOf('week').subtract((i + 1) * 14, 'days');
+        const twoWeeksEnd = moment().local().endOf('week').subtract(i * 14, 'days');
         const list = _.filter(cardsInfo, cardInfo => {
             const dateLastActivityOfCard = moment(cardInfo.dateLastActivity);
             return twoWeeksEnd.isAfter(dateLastActivityOfCard) && twoWeeksStart.isBefore(dateLastActivityOfCard);
