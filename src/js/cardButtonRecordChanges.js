@@ -5,7 +5,9 @@ t.get(context.card, 'shared', 'demandChangeCount').then(demandChangeCountInRespo
     demandChangeCount = demandChangeCountInResponse ? demandChangeCountInResponse : 0;
     showDemandChangeCount(`total changes: ${demandChangeCount}`);
 });
-
+t.cards('all').then(
+    res => console.log('res: ', res)
+);
 onRecordBtnClick = () => {
     demandChangeCount = demandChangeCount + 1;
     console.log('demandChangeCount is increased, now its value is: ', demandChangeCount);
