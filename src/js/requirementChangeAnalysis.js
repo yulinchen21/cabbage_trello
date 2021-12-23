@@ -77,7 +77,7 @@ drawHistogram = () => {
         console.log('twoWeeksStart: ', twoWeeksStart);
         console.log('twoWeeksEnd: ', twoWeeksEnd);
         console.log('cardCount and changeCount: ', cardCount, changeCount);
-        source = [...source, [`${twoWeeksStart.format('yyyy/MM/DD')} ~ ${twoWeeksEnd.format('yyyy/MM/DD')}`, cardCount, changeCount]];
+        source = [...source, [`${twoWeeksStart.format('MM/DD')} ~ ${twoWeeksEnd.format('MM/DD')}`, cardCount, changeCount]];
     }
     console.log('source: ', source);
     const histogramOption = generateHistogramOption(source);
@@ -102,8 +102,6 @@ generateHistogramOption = source => {
             data: labels
         },
         yAxis: {},
-        // Declare several bar series, each will be mapped
-        // to a column of dataset.source by default.
         series: [{type: 'bar'}, {type: 'bar'}]
     };
     histogramOption.dataset.source = source;
