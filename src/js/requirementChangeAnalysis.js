@@ -57,6 +57,7 @@ drawHistogram = () => {
     const _ = require('lodash');
     const moment = require('moment');
     let source = [['cycle', 'cards count', 'changes count']];
+    console.log('cardsInfo: ', cardsInfo);
     for (let i = 0; i < 6; i++) {
         const twoWeeksStart = moment().local().endOf('week').subtract((i + 1) * 14, 'days');
         const twoWeeksEnd = moment().local().endOf('week').subtract(i * 14);
@@ -64,6 +65,7 @@ drawHistogram = () => {
             const dateLastActivityOfCard = moment(cardInfo.dateLastActivity);
             return twoWeeksEnd.isAfter(dateLastActivityOfCard) && twoWeeksStart.isBefore(dateLastActivityOfCard);
         });
+        console.log('list: ', list);
         const cardCount = list.length;
         let changeCount = 0;
         _.forEach(list, singleCard => {
