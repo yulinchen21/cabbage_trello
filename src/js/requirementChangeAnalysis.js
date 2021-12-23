@@ -5,6 +5,7 @@ let dataSet = {};
 const t = window.TrelloPowerUp.iframe();
 
 var echarts = require('echarts');
+const moment = require("moment");
 var chartDom = document.getElementById('charts');
 var myChart = echarts.init(chartDom);
 var option;
@@ -42,15 +43,30 @@ t.cards('id', 'labels', 'name', 'dateLastActivity')
                 .then(demandChangeCount => {
                     cardsInfo = [...cardsInfo, {...cardInfo, demandChangeCount}]
                 })
-        })
+        });
+        console.log('cardsInfo: ', cardsInfo);
     });
 
 startAnalysis = () => {
-
     drawPieChart();
 }
 
 drawHistogram = () => {
+    const _ = require('lodash');
+    const moment = require('moment');
+    const source = [['cycle', 'cards count', 'changes count']];
+    for (let i = 0; i < 6; i++) {
+
+        _.filter(cardsInfo, cardInfo => {
+            const dateLastActivityOfCard = moment(cardInfo.dateLastActivity);
+            const twoWeeksStart = moment().local().endOf('week').subtract((i + 1) * 14, 'days');
+            const twoWeeksEnd = moment().local().endOf('week').subtract(i * 14);
+            return twoWeeksEnd.isAfter(dateLastActivityOfCard) && twoWeeksStart.isBefore(dateLastActivityOfCard);
+        });
+    }
+}
+
+generateHistogramOption = data => {
 
 }
 
@@ -101,8 +117,7 @@ generatePieChartOption = data => {
                 labelLine: {
                     show: false
                 },
-                data: [
-                ]
+                data: []
             }
         ]
     };

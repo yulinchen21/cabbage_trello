@@ -11,7 +11,10 @@
     "test": "jest"
   },
   "jest": {
-    "transformIgnorePatterns": ["/node_modules/(?!(foo|bar)/)", "/bar/"]
+    "transformIgnorePatterns": [
+      "/node_modules/(?!(foo|bar)/)",
+      "/bar/"
+    ]
   },
   "type": "module",
   "devDependencies": {
@@ -25,6 +28,7 @@
   "dependencies": {
     "diff": "^5.0.0",
     "echarts": "^5.2.2",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "moment": "^2.29.1"
   }
 }
