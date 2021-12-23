@@ -50,6 +50,7 @@ t.cards('id', 'labels', 'name', 'dateLastActivity')
 
 startAnalysis = () => {
     drawPieChart();
+    drawHistogram();
 }
 
 drawHistogram = () => {
