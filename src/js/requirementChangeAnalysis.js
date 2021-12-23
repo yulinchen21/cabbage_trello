@@ -6,6 +6,7 @@ const t = window.TrelloPowerUp.iframe();
 
 var echarts = require('echarts');
 const moment = require("moment");
+const _ = require("lodash");
 var chartDom = document.getElementById('charts');
 var myChart = echarts.init(chartDom);
 var option;
@@ -54,16 +55,24 @@ startAnalysis = () => {
 drawHistogram = () => {
     const _ = require('lodash');
     const moment = require('moment');
-    const source = [['cycle', 'cards count', 'changes count']];
+    let source = [['cycle', 'cards count', 'changes count']];
     for (let i = 0; i < 6; i++) {
-
-        _.filter(cardsInfo, cardInfo => {
+        const twoWeeksStart = moment().local().endOf('week').subtract((i + 1) * 14, 'days');
+        const twoWeeksEnd = moment().local().endOf('week').subtract(i * 14);
+        const list = _.filter(cardsInfo, cardInfo => {
             const dateLastActivityOfCard = moment(cardInfo.dateLastActivity);
-            const twoWeeksStart = moment().local().endOf('week').subtract((i + 1) * 14, 'days');
-            const twoWeeksEnd = moment().local().endOf('week').subtract(i * 14);
             return twoWeeksEnd.isAfter(dateLastActivityOfCard) && twoWeeksStart.isBefore(dateLastActivityOfCard);
         });
+        const cardCount = list.length;
+        let changeCount = 0;
+        _.forEach(list, singleCard => {
+            const singleCount = _.get(singleCard, 'demandChangeCount', 0);
+            changeCount += singleCount;
+        });
+        source = [ ...source, [twoWeeksStart.toString(), cardCount, changeCount]];
     }
+    console.log('source: ', source);
+    return source;
 }
 
 generateHistogramOption = data => {
@@ -129,7 +138,6 @@ calculateRequirementChangeCountAndCardCountAsSource = dataSet => {
     const _ = require('lodash');
     let data = [];
     _.forEach(dataSet, (value, key) => {
-        const cardCount = value.length;
         let changeCount = 0;
         _.forEach(value, singleCard => {
             const singleCount = _.get(singleCard, 'demandChangeCount', 0);
