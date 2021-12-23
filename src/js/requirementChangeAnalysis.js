@@ -88,6 +88,12 @@ generateHistogramOption = source => {
     const labels = _.drop(source).map(data => data[0]);
     console.log('labels', labels);
     const histogramOption = {
+        color: ['#d3f998', '#59c276'],
+        title: {
+            text: 'Requirement Changes Statistics',
+            textAlign: 'left',
+            left: '20%'
+        },
         legend: {},
         tooltip: {},
         dataset: {
