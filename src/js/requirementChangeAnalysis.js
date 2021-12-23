@@ -99,7 +99,15 @@ generateHistogramOption = source => {
         },
         xAxis: {
             type: 'category',
-            data: labels
+            data: labels,
+            axisTick: {
+                alignWithLabel: true,
+                interval: '0'
+            },
+            axisLabel: {
+                show: true,
+                interval: '0'
+            }
         },
         yAxis: {},
         series: [{type: 'bar'}, {type: 'bar'}]
