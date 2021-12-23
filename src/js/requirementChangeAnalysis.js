@@ -70,6 +70,9 @@ drawHistogram = () => {
             const singleCount = _.get(singleCard, 'demandChangeCount', 0);
             changeCount += singleCount;
         });
+        console.log('twoWeeksStart: ', twoWeeksStart);
+        console.log('twoWeeksEnd: ', twoWeeksEnd);
+        console.log('cardCount and changeCount: ', cardCount, changeCount);
         source = [ ...source, [twoWeeksStart.toString(), cardCount, changeCount]];
     }
     console.log('source: ', source);
