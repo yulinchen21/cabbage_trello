@@ -97,11 +97,14 @@ generateHistogramOption = source => {
                 ['cycle2', 3, 34],
             ]
         },
-        xAxis: { type: 'category' },
+        xAxis: {
+            type: 'category',
+            data: labels
+        },
         yAxis: {},
         // Declare several bar series, each will be mapped
         // to a column of dataset.source by default.
-        series: [{ type: 'bar' }, { type: 'bar' }]
+        series: [{type: 'bar'}, {type: 'bar'}]
     };
     histogramOption.dataset.source = source;
     return histogramOption;
