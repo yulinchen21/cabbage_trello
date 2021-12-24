@@ -5,7 +5,6 @@ let dataSet = {};
 const t = window.TrelloPowerUp.iframe();
 
 var echarts = require('echarts');
-const moment = require("moment");
 const _ = require("lodash");
 var chartDom = document.getElementById('charts');
 var myChart = echarts.init(chartDom);
@@ -41,10 +40,12 @@ t.board('labels').then(res => {
 });
 t.cards('id', 'labels', 'name', 'dateLastActivity')
     .then(cards => {
+        console.log('cards: ', cards);
         cards.forEach(cardInfo => {
-            t.get(cardInfo.id, 'shared', 'demandChangeCount')
-                .then(demandChangeCount => {
-                    cardsInfo = [...cardsInfo, {...cardInfo, demandChangeCount}]
+            t.get(cardInfo.id, 'shared', 'requirementChangeCount')
+                .then(requirementChangeCount => {
+                    console.log('requirementChangeCount: ',requirementChangeCount);
+                    cardsInfo = [...cardsInfo, {...cardInfo, requirementChangeCount}];
                 })
         });
         console.log('cardsInfo: ', cardsInfo);
@@ -71,7 +72,7 @@ drawHistogram = () => {
         const cardCount = list.length;
         let changeCount = 0;
         _.forEach(list, singleCard => {
-            const singleCount = _.get(singleCard, 'demandChangeCount', 0);
+            const singleCount = _.get(singleCard, 'requirementChangeCount', 0);
             changeCount += singleCount;
         });
         console.log('twoWeeksStart: ', twoWeeksStart);
@@ -85,17 +86,22 @@ drawHistogram = () => {
 }
 
 generateHistogramOption = source => {
+    const _ = require('lodash');
     const labels = _.drop(source).map(data => data[0]);
     console.log('labels', labels);
     const histogramOption = {
         color: ['#d3f998', '#59c276'],
         title: {
             text: 'Requirement Changes Statistics',
-            textAlign: 'left',
-            left: '20%'
+            x: 'center'
         },
-        legend: {},
+        legend: {
+            padding: [20, 0, 0, 0],
+        },
         tooltip: {},
+        dataRange: {
+            padding: [40, 0, 0, 0],
+        },
         dataset: {
             source: [
                 ['cycle', 'cards count', 'changes count'],
@@ -183,7 +189,7 @@ calculateRequirementChangeCountAndCardCountAsSource = dataSet => {
     _.forEach(dataSet, (value, key) => {
         let changeCount = 0;
         _.forEach(value, singleCard => {
-            const singleCount = _.get(singleCard, 'demandChangeCount', 0);
+            const singleCount = _.get(singleCard, 'requirementChangeCount', 0);
             changeCount += singleCount;
         });
         data = [...data, {name: key, value: changeCount}];
