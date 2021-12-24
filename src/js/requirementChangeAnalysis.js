@@ -100,10 +100,10 @@ generateHistogramOption = source => {
         },
         legend: {
             right: '10%',
-            top: '5%'
+            top: '10%'
         },
         grid: {
-            top: '10%'
+            top: '20%'
         },
         tooltip: {},
         dataset: {
