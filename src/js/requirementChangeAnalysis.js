@@ -57,6 +57,7 @@ onConfirm = () => {
     const start_data_value = document.getElementById("start-date").value;
     const end_data_value = document.getElementById("end-date").value;
     const period_value = document.getElementById("period").value;
+    console.log('input params: ', start_data_value, end_data_value, period_value);
     if(!start_data_value || !end_data_value || !period_value) {
         window.prompt("参数输入不完整，请补全参数");
         return;
