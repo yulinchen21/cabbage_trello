@@ -84,7 +84,7 @@ drawHistogram = (start_data_value, end_data_value, period_value) => {
     console.log('period: ', period);
     console.log('startDate: ', startDate.format('yyyy/MM/DD').toString());
     console.log('endDate: ', endDate.format('yyyy/MM/DD').toString());
-    for (let i = 0; i < 6; i++) {
+    while(startDate.isBefore(periodEndPivot)) {
         const periodEnd = _.cloneDeep(periodEndPivot);
         const periodStart = periodEndPivot.subtract(period, 'days');
         const list = _.filter(cardsInfo, cardInfo => {
