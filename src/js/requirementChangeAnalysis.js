@@ -113,13 +113,6 @@ generateHistogramOption = source => {
     console.log('labels', labels);
     const histogramOption = {
         color: ['#d3f998', '#59c276'],
-        title: {
-            text: 'Requirement Changes Statistics',
-            x: 'center',
-            textStyle: {
-                fontSize: 30
-            }
-        },
         legend: {
             right: '10%',
             top: '10%'
