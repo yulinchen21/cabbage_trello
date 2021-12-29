@@ -44,28 +44,48 @@ t.cards('id', 'labels', 'name', 'dateLastActivity')
         cards.forEach(cardInfo => {
             t.get(cardInfo.id, 'shared', 'requirementChangeCount')
                 .then(requirementChangeCount => {
-                    console.log('requirementChangeCount: ',requirementChangeCount);
                     cardsInfo = [...cardsInfo, {...cardInfo, requirementChangeCount}];
                 })
         });
         drawPieChart();
         drawHistogram();
-        console.log('cardsInfo: ', cardsInfo);
     });
 
-drawHistogram = () => {
+onConfirm = () => {
+    const _ = require('lodash');
+    const moment = require('moment');
+    const start_data_value = document.getElementById("start-date").value;
+    const end_data_value = document.getElementById("end-date").value;
+    const period_value = document.getElementById("period").value;
+    if(!start_data_value || !end_data_value || !period_value) {
+        window.prompt("参数输入不完整，请补全参数");
+        return;
+    }
+    if( !moment(start_data_value).isBefore(moment(end_data_value))){
+        window.prompt("开始日期晚于结束日期，请补全参数");
+        return;
+    }
+    if( period_value <= 0){
+        window.prompt("周期输入有误");
+        return;
+    }
+    drawHistogram(start_data_value, end_data_value, period_value);
+}
+
+drawHistogram = (start_data_value, end_data_value, period_value) => {
     const _ = require('lodash');
     const moment = require('moment');
     let source = [['cycle', 'cards count', 'changes count']];
-    console.log('cardsInfo: ', cardsInfo);
+    const period = period_value ? _.toNumber(period_value) : 14;
+    const startDate = _.isEmpty(start_data_value) ? moment().local() : moment(start_data_value);
+    const endDate = _.isEmpty(end_data_value) ? moment().local() : moment(end_data_value);
     for (let i = 0; i < 6; i++) {
-        const twoWeeksStart = moment().local().endOf('week').subtract((i + 1) * 14, 'days');
-        const twoWeeksEnd = moment().local().endOf('week').subtract(i * 14, 'days');
+        const twoWeeksStart = startDate.endOf('week').subtract((i + 1) * period, 'days');
+        const twoWeeksEnd = startDate.endOf('week').subtract(i * period, 'days');
         const list = _.filter(cardsInfo, cardInfo => {
             const dateLastActivityOfCard = moment(cardInfo.dateLastActivity);
             return twoWeeksEnd.isAfter(dateLastActivityOfCard) && twoWeeksStart.isBefore(dateLastActivityOfCard);
         });
-        console.log('list: ', list);
         const cardCount = list.length;
         let changeCount = 0;
         _.forEach(list, singleCard => {

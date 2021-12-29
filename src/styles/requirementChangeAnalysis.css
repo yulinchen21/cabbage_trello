@@ -4,42 +4,12 @@
     align-items: center;
 }
 
-.top-button-area {
-    display: flex;
-    align-items: center;
-    margin: 10px 0 0 0;
-    flex-direction: row;
-}
-
-.top-button-text {
-    font-size: 17px;
-}
-
-.top-button {
-    height: 30px;
-    margin: 0 0 0 10px;
-}
-
-.top-bar {
-    display: flex;
-    flex-direction: row;
-}
-
-.list-container {
-    display: flex;
-    flex-direction: column;
-}
-
-.line-item {
-    display: flex;
-    flex-direction: row;
-}
-
 .histogram-desc {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
+
 
 .title-area {
     display: flex;
