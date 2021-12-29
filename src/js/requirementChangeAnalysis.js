@@ -58,15 +58,15 @@ onConfirm = () => {
     const end_data_value = document.getElementById("end-date").value;
     const period_value = document.getElementById("period").value;
     console.log('input params: ', start_data_value, end_data_value, period_value);
-    if(!start_data_value || !end_data_value || !period_value) {
+    if (!start_data_value || !end_data_value || !period_value) {
         window.prompt("参数输入不完整，请补全参数");
         return;
     }
-    if( !moment(start_data_value).isBefore(moment(end_data_value))){
+    if (!moment(start_data_value).isBefore(moment(end_data_value))) {
         window.prompt("开始日期晚于结束日期，请补全参数");
         return;
     }
-    if( period_value <= 0){
+    if (period_value <= 0) {
         window.prompt("周期输入有误");
         return;
     }
@@ -150,6 +150,14 @@ generateHistogramOption = source => {
             }
         },
         yAxis: {},
+        dataZoom: [
+            {
+                type: 'inside'
+            },
+            {
+                type: 'slider'
+            }
+        ],
         series: [{type: 'bar'}, {type: 'bar'}]
     };
     histogramOption.dataset.source = source;
