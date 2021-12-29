@@ -114,8 +114,7 @@ generateHistogramOption = source => {
     const histogramOption = {
         color: ['#d3f998', '#59c276'],
         legend: {
-            right: '10%',
-            top: '10%'
+            show: false
         },
         grid: {
             top: '20%'
@@ -133,11 +132,11 @@ generateHistogramOption = source => {
             data: labels,
             axisTick: {
                 alignWithLabel: true,
-                interval: '0'
+                interval: 6
             },
             axisLabel: {
                 show: true,
-                interval: '0'
+                interval: 6
             }
         },
         yAxis: {},
