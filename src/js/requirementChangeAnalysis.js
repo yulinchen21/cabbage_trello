@@ -84,7 +84,7 @@ drawHistogram = (start_data_value, end_data_value, period_value) => {
     console.log('startDate: ', startDate.format('yyyy/MM/DD').toString());
     console.log('endDate: ', endDate.format('yyyy/MM/DD').toString());
     for (let i = 0; i < 6; i++) {
-        console.log('startDate.endOf(\'week\'): ', startDate.endOf('week'));
+        console.log('startDate.endOf(\'week\'): ', startDate.endOf('week').format('yyyy/MM/DD').toString());
         console.log('how many days to subtract: ', (i + 1) * period);
         const twoWeeksStart = startDate.endOf('week').subtract((i + 1) * period, 'days');
         const twoWeeksEnd = startDate.endOf('week').subtract(i * period, 'days');
