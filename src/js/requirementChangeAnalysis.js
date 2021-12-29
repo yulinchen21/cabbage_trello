@@ -95,8 +95,8 @@ drawHistogram = (start_data_value, end_data_value, period_value) => {
             const singleCount = _.get(singleCard, 'requirementChangeCount', 0);
             changeCount += singleCount;
         });
-        console.log('twoWeeksStart: ', twoWeeksStart);
-        console.log('twoWeeksEnd: ', twoWeeksEnd);
+        console.log('twoWeeksStart: ', twoWeeksStart.format('yyyy/MM/DD').toString());
+        console.log('twoWeeksEnd: ', twoWeeksEnd.format('yyyy/MM/DD').toString());
         console.log('cardCount and changeCount: ', cardCount, changeCount);
         source = [...source, [`${twoWeeksStart.format('MM/DD')} ~ ${twoWeeksEnd.format('MM/DD')}`, cardCount, changeCount]];
     }
