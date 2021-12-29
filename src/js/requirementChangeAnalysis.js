@@ -80,17 +80,18 @@ drawHistogram = (start_data_value, end_data_value, period_value) => {
     const period = period_value ? _.toNumber(period_value) : 14;
     const startDate = _.isEmpty(start_data_value) ? moment().local() : moment(start_data_value);
     const endDate = _.isEmpty(end_data_value) ? moment().local() : moment(end_data_value);
+    let periodEndPivot = endDate.endOf('week');
     console.log('period: ', period);
     console.log('startDate: ', startDate.format('yyyy/MM/DD').toString());
     console.log('endDate: ', endDate.format('yyyy/MM/DD').toString());
     for (let i = 0; i < 6; i++) {
         console.log('startDate.endOf(\'week\'): ', startDate.endOf('week').format('yyyy/MM/DD').toString());
         console.log('how many days to subtract: ', (i + 1) * period);
-        const twoWeeksStart = startDate.endOf('week').subtract((i + 1) * period, 'days');
-        const twoWeeksEnd = startDate.endOf('week').subtract(i * period, 'days');
+        const periodEnd = periodEndPivot;
+        const periodStart = periodEndPivot.subtract(period, 'days');
         const list = _.filter(cardsInfo, cardInfo => {
             const dateLastActivityOfCard = moment(cardInfo.dateLastActivity);
-            return twoWeeksEnd.isAfter(dateLastActivityOfCard) && twoWeeksStart.isBefore(dateLastActivityOfCard);
+            return periodEnd.isAfter(dateLastActivityOfCard) && periodStart.isBefore(dateLastActivityOfCard);
         });
         const cardCount = list.length;
         let changeCount = 0;
@@ -98,10 +99,10 @@ drawHistogram = (start_data_value, end_data_value, period_value) => {
             const singleCount = _.get(singleCard, 'requirementChangeCount', 0);
             changeCount += singleCount;
         });
-        console.log('twoWeeksStart: ', twoWeeksStart.format('yyyy/MM/DD').toString());
-        console.log('twoWeeksEnd: ', twoWeeksEnd.format('yyyy/MM/DD').toString());
+        console.log('periodStart: ', periodStart.format('yyyy/MM/DD').toString());
+        console.log('periodEnd: ', periodEnd.format('yyyy/MM/DD').toString());
         console.log('cardCount and changeCount: ', cardCount, changeCount);
-        source = [...source, [`${twoWeeksStart.format('MM/DD')} ~ ${twoWeeksEnd.format('MM/DD')}`, cardCount, changeCount]];
+        source = [...source, [`${periodStart.format('MM/DD')} ~ ${periodEnd.format('MM/DD')}`, cardCount, changeCount]];
     }
     console.log('source: ', source);
     const histogramOption = generateHistogramOption(source);
