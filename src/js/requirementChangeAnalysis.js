@@ -131,12 +131,9 @@ generateHistogramOption = source => {
             type: 'category',
             data: labels,
             axisTick: {
-                alignWithLabel: true,
-                interval: 6
             },
             axisLabel: {
                 show: true,
-                interval: 6
             }
         },
         yAxis: {},
