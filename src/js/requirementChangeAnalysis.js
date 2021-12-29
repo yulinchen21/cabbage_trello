@@ -78,13 +78,13 @@ drawHistogram = (start_data_value, end_data_value, period_value) => {
     const moment = require('moment');
     let source = [['cycle', 'cards count', 'changes count']];
     const period = period_value ? _.toNumber(period_value) : 14;
-    const startDate = _.isEmpty(start_data_value) ? moment().local() : moment(start_data_value);
-    const endDate = _.isEmpty(end_data_value) ? moment().local() : moment(end_data_value);
+    const startDate = _.isEmpty(start_data_value) ? moment().local().endOf('week').subtract(14 * 6, 'days') : moment(start_data_value);
+    const endDate = _.isEmpty(end_data_value) ? moment().local().endOf('week') : moment(end_data_value);
     let periodEndPivot = endDate.endOf('week');
     console.log('period: ', period);
     console.log('startDate: ', startDate.format('yyyy/MM/DD').toString());
     console.log('endDate: ', endDate.format('yyyy/MM/DD').toString());
-    while(startDate.isBefore(periodEndPivot)) {
+    while (startDate.isBefore(periodEndPivot)) {
         const periodEnd = _.cloneDeep(periodEndPivot);
         const periodStart = periodEndPivot.subtract(period, 'days');
         const list = _.filter(cardsInfo, cardInfo => {
@@ -130,8 +130,7 @@ generateHistogramOption = source => {
         xAxis: {
             type: 'category',
             data: labels,
-            axisTick: {
-            },
+            axisTick: {},
             axisLabel: {
                 show: true,
             }
