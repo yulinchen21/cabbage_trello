@@ -80,8 +80,8 @@ drawHistogram = (start_data_value, end_data_value, period_value) => {
     const startDate = _.isEmpty(start_data_value) ? moment().local() : moment(start_data_value);
     const endDate = _.isEmpty(end_data_value) ? moment().local() : moment(end_data_value);
     console.log('period: ', period);
-    console.log('startDate: ', startDate);
-    console.log('endDate: ', endDate);
+    console.log('startDate: ', startDate.format('yyyy/MM/DD').toString());
+    console.log('endDate: ', endDate.format('yyyy/MM/DD').toString());
     for (let i = 0; i < 6; i++) {
         const twoWeeksStart = startDate.endOf('week').subtract((i + 1) * period, 'days');
         const twoWeeksEnd = startDate.endOf('week').subtract(i * period, 'days');
