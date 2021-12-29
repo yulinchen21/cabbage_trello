@@ -1,16 +1,72 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="../styles/requirementChangeAnalysis.css">
 </head>
 <body>
-<div>
-    <h1>Requirement Change Statistics</h1>
-    <button onclick="startAnalysis()">start analysis</button>
-    <div id="charts" style="width:600px; height: 400px;">it is for echarts</div>
-    <div id="histogram" style="width:600px; height: 400px;">it is for echarts</div>
+<div class="container">
+    <div class="top-button-area">
+        <div class="top-button-text">click the button to check the analysis:</div>
+        <button class="top-button" onclick="startAnalysis()">start analysis</button>
+    </div>
+    <div id="charts" style="width:900px; height: 600px; margin: 40px 0 0 0; background-color: aliceblue">its for pie
+        chart
+    </div>
+    <div id="histogram-desc" style="width:900px; height: 260px; margin: 40px 0 0 0; background-color: azure">
+        <div class="title-area">Requirement Changes Statistics</div>
+        <div class="description-area">
+            <div class="text-area">
+                <div>此图表可以展示在某一个周期内需求变更的总次数和总卡数，您可以通过调整日期和周期查看不同时间周期内的数据统计和对比结果。</div>
+                <br/>
+                <div> This chart can display the total number of requirement changes and the total number of cards in a
+                    certain period. You can view the statistics and comparison results in different time periods by
+                    adjusting the date and period.
+                </div>
+            </div>
+            <div class="legend-area">
+                <div class="legend-block">
+                    <div style="height: 15px; width: 15px; border: 3px; background-color: #d3f998"></div>
+                    <div style="width: 200px; padding-left: 5px">card numbers</div>
+                </div>
+                <div class="legend-block">
+                    <div style="height: 15px; width: 15px; border: 3px; background-color: #59c276"></div>
+                    <div style="width: 200px; padding-left: 5px">requirement changes times</div>
+                </div>
+            </div>
+        </div>
+        <div class="param-setting-area">
+            <div class="param-setting-area-block" style="padding: 0 0 0 15px">
+                <label class="param-setting-area-block-text" for="start-date">Start Time:</label>
+                <input class="param-setting-area-data-picker-block" id="start-date" type="date">
+            </div>
+            <div class="param-setting-area-block">
+                <label class="param-setting-area-block-text" for="end-date">End Time:</label>
+                <input class="param-setting-area-data-picker-block" id="end-date" type="date">
+            </div>
+            <div class="param-setting-area-block">
+                <label class="param-setting-area-block-text" for="period">Period:</label>
+                <input onkeyup="this.value=this.value.replace(/\D/g,'')" class="param-setting-area-data-picker-block" id="period" type="text" placeholder="请输入天数">
+            </div>
+            <div class="param-setting-area-block" style="padding: 0 0 0 15px;">
+                <button onclick="confirm()">confirm</button>
+            </div>
+        </div>
+    </div>
+    <div id="histogram" style="width:900px; height: 600px; background-color: aliceblue">its for histogram</div>
 </div>
 <script src="https://p.trellocdn.com/power-up.min.js" crossorigin="anonymous"></script>
 <script src="../js/requirementChangeAnalysis.js"></script>
+<script>
+    function confirm() {
+        let start_data_value = document.getElementById("start-date").value;
+        let end_data_value = document.getElementById("end-date").value;
+        let period_value = document.getElementById("period").value;
+        console.log('start_data_value: ', start_data_value);
+        console.log('end_data_value: ', end_data_value);
+        console.log('period_value: ', period_value);
+    }
+
+</script>
 </body>
 </html>

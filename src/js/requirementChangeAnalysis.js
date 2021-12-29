@@ -48,13 +48,10 @@ t.cards('id', 'labels', 'name', 'dateLastActivity')
                     cardsInfo = [...cardsInfo, {...cardInfo, requirementChangeCount}];
                 })
         });
+        drawPieChart();
+        drawHistogram();
         console.log('cardsInfo: ', cardsInfo);
     });
-
-startAnalysis = () => {
-    drawPieChart();
-    drawHistogram();
-}
 
 drawHistogram = () => {
     const _ = require('lodash');
