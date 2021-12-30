@@ -115,16 +115,10 @@ drawHistogram = (start_data_value, end_data_value, period_value) => {
 }
 
 generateHistogramOption = source => {
-    const _ = require('lodash');
-    const labels = _.drop(source).map(data => data[0]);
-    console.log('labels', labels);
     const histogramOption = {
         color: ['#d3f998', '#59c276'],
         legend: {
             show: false
-        },
-        grid: {
-            top: '20%'
         },
         tooltip: {},
         dataset: {
@@ -136,7 +130,6 @@ generateHistogramOption = source => {
         },
         xAxis: {
             type: 'category',
-            data: labels,
             axisTick: {},
             axisLabel: {
                 show: true,
