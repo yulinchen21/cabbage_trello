@@ -62,7 +62,7 @@ t.cards('id', 'idList', 'labels', 'name', 'dateLastActivity')
                 );
 
         });
-        console.log('cardsInfo: ', cardsInfo);
+        console.log('cardsInfo outside: ', cardsInfo);
 
     });
 
