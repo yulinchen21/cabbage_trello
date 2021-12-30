@@ -161,6 +161,7 @@ drawPieChart = () => {
         dataSetByList = {...dataSetByList, [listInfo.name]: list};
     });
     console.log('dataSetByList: ', dataSetByList);
+    console.log('cardsInfoK: ', cardsInfo);
     const data = calculatedemandChangeCountAndCardCountAsSource(dataSet);
     const dataByList = calculatedemandChangeCountAndCardCountAsSource(dataSetByList);
     console.log('dataByList: ', dataByList);
