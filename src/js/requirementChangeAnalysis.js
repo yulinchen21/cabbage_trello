@@ -166,6 +166,7 @@ drawPieChart = () => {
         console.log('listInfo: ', listInfo);
         console.log('dataSetByList: ', dataSetByList);
         const list = _.filter(cardsInfo, cardInfo => cardInfo.idList === listsInfo.id);
+        console.log('list after filter: ', listInfo);
         dataSetByList = {...dataSetByList, [listInfo.name]: list};
     });
     const data = calculatedemandChangeCountAndCardCountAsSource(dataSet);
