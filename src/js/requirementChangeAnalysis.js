@@ -105,7 +105,7 @@ drawHistogram = (start_data_value, end_data_value, period_value) => {
         console.log('periodEnd: ', periodEnd.format('yyyy/MM/DD').toString());
         console.log('periodStart: ', periodStart.format('yyyy/MM/DD').toString());
         console.log('cardCount and changeCount: ', cardCount, changeCount);
-        source = [...source, [`${periodEnd.format('yyyy/MM/DD')}~${periodStart.format('yyyy/MM/DD')}`, cardCount, changeCount]];
+        source = [...source, [`${periodStart.format('yyyy/MM/DD')}~${periodEnd.format('yyyy/MM/DD')}`, cardCount, changeCount]];
     }
     console.log('source: ', source);
     source = [labelArray, ..._.reverse(source)];
