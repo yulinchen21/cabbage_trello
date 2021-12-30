@@ -105,7 +105,6 @@ drawHistogram = (start_data_value, end_data_value, period_value) => {
             const dateLastActivityOfCard = moment(cardInfo.dateLastActivity);
             return periodStart.isBefore(dateLastActivityOfCard) && periodEnd.isAfter(dateLastActivityOfCard) && _.get(cardInfo, 'demandChangeCount');
         });
-        console.log('list: ', list);
         const cardCount = list.length;
         let changeCount = 0;
         _.forEach(list, singleCard => {
@@ -164,6 +163,8 @@ drawPieChart = () => {
         dataSet = {...dataSet, [label.name]: list};
     });
     _.forEach(listsInfo, listInfo => {
+        console.log('listInfo: ', listInfo);
+        console.log('dataSetByList: ', dataSetByList);
         const list = _.filter(cardsInfo, cardInfo => cardInfo.idList === listsInfo.id);
         dataSetByList = {...dataSetByList, [listInfo.name]: list};
     });
