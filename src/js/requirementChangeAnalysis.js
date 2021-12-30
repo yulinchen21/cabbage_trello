@@ -39,7 +39,7 @@ t.board('labels').then(res => {
     labelSet = _.filter(res.labels, label => label.name !== '');
     console.log('labelSet: ', labelSet);
 });
-t.lists('name', 'cards').then(lists => {
+t.lists('all').then(lists => {
     console.log('lists: ', JSON.stringify(lists, null, 2));
 });
 t.cards('id', 'labels', 'name', 'dateLastActivity')
