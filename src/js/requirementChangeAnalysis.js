@@ -45,16 +45,21 @@ t.lists('all').then(lists => {
 });
 t.cards('id', 'idList', 'labels', 'name', 'dateLastActivity')
     .then(cards => {
+        let itemsProcessed = 0;
         console.log('cards: ', cards);
-        cards.forEach(cardInfo => {
+        cards.forEach((cardInfo, index, array) => {
             t.get(cardInfo.id, 'shared', 'demandChangeCount')
                 .then(demandChangeCount => {
                     cardsInfo = [...cardsInfo, {...cardInfo, demandChangeCount}];
                 })
+            itemsProcessed++;
+            if(itemsProcessed === array.length) {
+                drawPieChart();
+                drawHistogram();
+            }
         });
         console.log('cardsInfo: ', cardsInfo);
-        drawPieChart();
-        drawHistogram();
+
     });
 
 onConfirm = () => {
