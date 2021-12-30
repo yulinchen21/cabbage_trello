@@ -101,7 +101,7 @@ drawHistogram = (start_data_value, end_data_value, period_value) => {
         const periodEnd = periodStartPivot.add(period, 'days');
         const list = _.filter(cardsInfo, cardInfo => {
             const dateLastActivityOfCard = moment(cardInfo.dateLastActivity);
-            return periodStart.isBefore(dateLastActivityOfCard) && periodEnd.isAfter(dateLastActivityOfCard);
+            return periodStart.isBefore(dateLastActivityOfCard) && periodEnd.isAfter(dateLastActivityOfCard) && _.get(cardInfo, 'demandChangeCount');
         });
         const cardCount = list.length;
         let changeCount = 0;
