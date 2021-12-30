@@ -52,6 +52,7 @@ t.cards('id', 'idList', 'labels', 'name', 'dateLastActivity')
                     cardsInfo = [...cardsInfo, {...cardInfo, demandChangeCount}];
                 })
         });
+        console.log('cardsInfo: ', cardsInfo);
         drawPieChart();
         drawHistogram();
     });
