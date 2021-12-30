@@ -79,11 +79,12 @@ onConfirm = () => {
 drawHistogram = (start_data_value, end_data_value, period_value) => {
     const _ = require('lodash');
     const moment = require('moment');
-    let source = [['cycle', 'cards count', 'changes count']];
+    const labelArray = ['cycle', 'cards count', 'changes count'];
+    let source = [];
     const period = period_value ? _.toNumber(period_value) : 14;
     const startDate = _.isEmpty(start_data_value) ? moment().local().endOf('week').subtract(14 * 6, 'days') : moment(start_data_value);
     const endDate = _.isEmpty(end_data_value) ? moment().local().endOf('week') : moment(end_data_value);
-    let periodEndPivot = endDate.endOf('week');
+    let periodEndPivot = endDate;
     console.log('period: ', period);
     console.log('startDate: ', startDate.format('yyyy/MM/DD').toString());
     console.log('endDate: ', endDate.format('yyyy/MM/DD').toString());
@@ -103,9 +104,11 @@ drawHistogram = (start_data_value, end_data_value, period_value) => {
         console.log('periodStart: ', periodStart.format('yyyy/MM/DD').toString());
         console.log('periodEnd: ', periodEnd.format('yyyy/MM/DD').toString());
         console.log('cardCount and changeCount: ', cardCount, changeCount);
-        source = [...source, [`${periodStart.format('MM/DD')} ~ ${periodEnd.format('MM/DD')}`, cardCount, changeCount]];
+        source = [...source, [`${periodStart.format('yyyy/MM/DD')}~${periodEnd.format('yyyy/MM/DD')}`, cardCount, changeCount]];
     }
     console.log('source: ', source);
+    source = [labelArray, _.reverse(source)];
+    console.log('reversed source: ', source);
     const histogramOption = generateHistogramOption(source);
     myHistogram.setOption(histogramOption);
 }
