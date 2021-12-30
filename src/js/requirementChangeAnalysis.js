@@ -59,11 +59,9 @@ t.cards('id', 'idList', 'labels', 'name', 'dateLastActivity')
 onConfirm = () => {
     const _ = require('lodash');
     const moment = require('moment');
-    console.log('cardsInfo: ', cardsInfo);
     const start_data_value = document.getElementById("start-date").value;
     const end_data_value = document.getElementById("end-date").value;
     const period_value = document.getElementById("period").value;
-    console.log('input params: ', start_data_value, end_data_value, period_value);
     if (!start_data_value || !end_data_value || !period_value) {
         window.prompt("参数输入不完整，请补全参数");
         return;
@@ -87,9 +85,6 @@ drawHistogram = (start_data_value, end_data_value, period_value) => {
     const startDate = _.isEmpty(start_data_value) ? moment().local().endOf('week').subtract(14 * 6, 'days') : moment(start_data_value);
     const endDate = _.isEmpty(end_data_value) ? moment().local().endOf('week') : moment(end_data_value);
     let periodStartPivot = startDate;
-    console.log('period: ', period);
-    console.log('startDate: ', startDate.format('yyyy/MM/DD').toString());
-    console.log('endDate: ', endDate.format('yyyy/MM/DD').toString());
     while (endDate.isAfter(periodStartPivot)) {
         const periodStart = _.cloneDeep(periodStartPivot);
         const periodEnd = periodStartPivot.add(period, 'days');
@@ -103,12 +98,8 @@ drawHistogram = (start_data_value, end_data_value, period_value) => {
             const singleCount = _.get(singleCard, 'demandChangeCount', 0);
             changeCount += singleCount;
         });
-        console.log('periodEnd: ', periodEnd.format('yyyy/MM/DD').toString());
-        console.log('periodStart: ', periodStart.format('yyyy/MM/DD').toString());
-        console.log('cardCount and changeCount: ', cardCount, changeCount);
         source = [...source, [`${periodStart.format('yyyy/MM/DD')}~${periodEnd.format('yyyy/MM/DD')}`, cardCount, changeCount]];
     }
-    console.log('source: ', source);
     const histogramOption = generateHistogramOption(source);
     myHistogram.setOption(histogramOption);
 }
@@ -151,6 +142,7 @@ generateHistogramOption = source => {
 
 drawPieChart = () => {
     const _ = require('lodash');
+    console.log('cardsInfo: ', cardsInfo);
     _.forEach(labelSet, label => {
         const list = _.filter(cardsInfo, cardInfo => {
             return _.find(cardInfo.labels, singleLabel => singleLabel.name === label.name)
@@ -161,8 +153,6 @@ drawPieChart = () => {
        const list = _.filter(cardsInfo, cardInfo => cardInfo.idList === listsInfo.id);
         dataSetByList = {...dataSetByList, [listInfo.name]: list};
     });
-    console.log('dataSetByList: ', dataSetByList);
-    console.log('cardsInfoK: ', cardsInfo);
     const data = calculatedemandChangeCountAndCardCountAsSource(dataSet);
     const dataByList = calculatedemandChangeCountAndCardCountAsSource(dataSetByList);
     console.log('dataByList: ', dataByList);
