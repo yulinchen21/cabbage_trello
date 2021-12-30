@@ -1,6 +1,7 @@
 let cardsInfo = [];
 let labelSet = [];
 let dataSet = {};
+let dataSetByList = {};
 let listsInfo = {};
 
 const t = window.TrelloPowerUp.iframe();
@@ -40,9 +41,9 @@ t.board('labels').then(res => {
     console.log('labelSet: ', labelSet);
 });
 t.lists('all').then(lists => {
-    console.log('lists: ', JSON.stringify(lists, null, 2));
+    listsInfo = lists;
 });
-t.cards('id', 'labels', 'name', 'dateLastActivity')
+t.cards('id', 'idList', 'labels', 'name', 'dateLastActivity')
     .then(cards => {
         console.log('cards: ', cards);
         cards.forEach(cardInfo => {
@@ -155,6 +156,11 @@ drawPieChart = () => {
         });
         dataSet = {...dataSet, [label.name]: list};
     });
+    _.forEach(listsInfo, listInfo => {
+       const list = _.filter(cardsInfo, cardInfo => cardInfo.idList === listsInfo.id);
+        dataSetByList = {...dataSetByList, [listInfo.name]: list};
+    });
+    console.log('dataSetByList: ', dataSetByList);
     const data = calculateRequirementChangeCountAndCardCountAsSource(dataSet);
     option = generatePieChartOption(data);
     myChart.setOption(option);
