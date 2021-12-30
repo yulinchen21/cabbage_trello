@@ -39,7 +39,7 @@ t.board('labels').then(res => {
     labelSet = _.filter(res.labels, label => label.name !== '');
     console.log('labelSet: ', labelSet);
 });
-t.lists('name', 'cards').then( lists => {
+t.lists('name', 'cards').then(lists => {
     console.log('lists: ', JSON.stringify(lists, null, 2));
 });
 t.cards('id', 'labels', 'name', 'dateLastActivity')
@@ -80,8 +80,7 @@ onConfirm = () => {
 drawHistogram = (start_data_value, end_data_value, period_value) => {
     const _ = require('lodash');
     const moment = require('moment');
-    const labelArray = ['cycle', 'cards count', 'changes count'];
-    let source = [];
+    let source = [['cycle', 'cards count', 'changes count']];
     const period = period_value ? _.toNumber(period_value) : 14;
     const startDate = _.isEmpty(start_data_value) ? moment().local().endOf('week').subtract(14 * 6, 'days') : moment(start_data_value);
     const endDate = _.isEmpty(end_data_value) ? moment().local().endOf('week') : moment(end_data_value);
@@ -108,9 +107,6 @@ drawHistogram = (start_data_value, end_data_value, period_value) => {
         source = [...source, [`${periodStart.format('yyyy/MM/DD')}~${periodEnd.format('yyyy/MM/DD')}`, cardCount, changeCount]];
     }
     console.log('source: ', source);
-    _.reverse(source);
-    source = [labelArray, ...source];
-    console.log('reversed source: ', source);
     const histogramOption = generateHistogramOption(source);
     myHistogram.setOption(histogramOption);
 }
