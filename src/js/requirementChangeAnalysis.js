@@ -162,6 +162,8 @@ drawPieChart = () => {
     });
     console.log('dataSetByList: ', dataSetByList);
     const data = calculateRequirementChangeCountAndCardCountAsSource(dataSet);
+    const dataByList = calculateRequirementChangeCountAndCardCountAsSource(dataSetByList);
+    console.log('dataByList: ', dataByList);
     option = generatePieChartOption(data);
     myChart.setOption(option);
 }
