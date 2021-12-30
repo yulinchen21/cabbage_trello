@@ -1,6 +1,7 @@
 let cardsInfo = [];
 let labelSet = [];
 let dataSet = {};
+let listsInfo = {};
 
 const t = window.TrelloPowerUp.iframe();
 
@@ -38,7 +39,7 @@ t.board('labels').then(res => {
     labelSet = _.filter(res.labels, label => label.name !== '');
     console.log('labelSet: ', labelSet);
 });
-t.lists("all").then(function (lists) {
+t.lists('name', 'cards').then( lists => {
     console.log('lists: ', JSON.stringify(lists, null, 2));
 });
 t.cards('id', 'labels', 'name', 'dateLastActivity')
@@ -107,7 +108,7 @@ drawHistogram = (start_data_value, end_data_value, period_value) => {
         source = [...source, [`${periodStart.format('yyyy/MM/DD')}~${periodEnd.format('yyyy/MM/DD')}`, cardCount, changeCount]];
     }
     console.log('source: ', source);
-    source = [labelArray, _.reverse(source)];
+    source = [labelArray, ..._.reverse(source)];
     console.log('reversed source: ', source);
     const histogramOption = generateHistogramOption(source);
     myHistogram.setOption(histogramOption);
