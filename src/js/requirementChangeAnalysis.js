@@ -59,6 +59,7 @@ t.cards('id', 'idList', 'labels', 'name', 'dateLastActivity')
 onConfirm = () => {
     const _ = require('lodash');
     const moment = require('moment');
+    console.log('cardsInfo: ', cardsInfo);
     const start_data_value = document.getElementById("start-date").value;
     const end_data_value = document.getElementById("end-date").value;
     const period_value = document.getElementById("period").value;
