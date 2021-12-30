@@ -85,16 +85,16 @@ drawHistogram = (start_data_value, end_data_value, period_value) => {
     const period = period_value ? _.toNumber(period_value) : 14;
     const startDate = _.isEmpty(start_data_value) ? moment().local().endOf('week').subtract(14 * 6, 'days') : moment(start_data_value);
     const endDate = _.isEmpty(end_data_value) ? moment().local().endOf('week') : moment(end_data_value);
-    let periodEndPivot = endDate;
+    let periodStartPivot = startDate;
     console.log('period: ', period);
     console.log('startDate: ', startDate.format('yyyy/MM/DD').toString());
     console.log('endDate: ', endDate.format('yyyy/MM/DD').toString());
-    while (startDate.isBefore(periodEndPivot)) {
-        const periodEnd = _.cloneDeep(periodEndPivot);
-        const periodStart = periodEndPivot.subtract(period, 'days');
+    while (endDate.isAfter(periodStartPivot)) {
+        const periodStart = _.cloneDeep(periodStartPivot);
+        const periodEnd = periodStartPivot.add(period, 'days');
         const list = _.filter(cardsInfo, cardInfo => {
             const dateLastActivityOfCard = moment(cardInfo.dateLastActivity);
-            return periodEnd.isAfter(dateLastActivityOfCard) && periodStart.isBefore(dateLastActivityOfCard);
+            return periodStart.isBefore(dateLastActivityOfCard) && periodEnd.isAfter(dateLastActivityOfCard);
         });
         const cardCount = list.length;
         let changeCount = 0;
@@ -102,10 +102,10 @@ drawHistogram = (start_data_value, end_data_value, period_value) => {
             const singleCount = _.get(singleCard, 'requirementChangeCount', 0);
             changeCount += singleCount;
         });
-        console.log('periodStart: ', periodStart.format('yyyy/MM/DD').toString());
         console.log('periodEnd: ', periodEnd.format('yyyy/MM/DD').toString());
+        console.log('periodStart: ', periodStart.format('yyyy/MM/DD').toString());
         console.log('cardCount and changeCount: ', cardCount, changeCount);
-        source = [...source, [`${periodStart.format('yyyy/MM/DD')}~${periodEnd.format('yyyy/MM/DD')}`, cardCount, changeCount]];
+        source = [...source, [`${periodEnd.format('yyyy/MM/DD')}~${periodStart.format('yyyy/MM/DD')}`, cardCount, changeCount]];
     }
     console.log('source: ', source);
     source = [labelArray, ..._.reverse(source)];
