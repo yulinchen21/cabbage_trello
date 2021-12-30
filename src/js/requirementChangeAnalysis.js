@@ -108,7 +108,8 @@ drawHistogram = (start_data_value, end_data_value, period_value) => {
         source = [...source, [`${periodStart.format('yyyy/MM/DD')}~${periodEnd.format('yyyy/MM/DD')}`, cardCount, changeCount]];
     }
     console.log('source: ', source);
-    source = [labelArray, ..._.reverse(source)];
+    _.reverse(source);
+    source = [labelArray, ...source];
     console.log('reversed source: ', source);
     const histogramOption = generateHistogramOption(source);
     myHistogram.setOption(histogramOption);
