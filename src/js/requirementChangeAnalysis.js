@@ -92,6 +92,7 @@ drawHistogram = (start_data_value, end_data_value, period_value) => {
     const _ = require('lodash');
     const moment = require('moment');
     let source = [['cycle', 'cards count', 'changes count']];
+    console.log('cardsInfo in drawHistogram: ', cardsInfo);
     const period = period_value ? _.toNumber(period_value) : 14;
     const startDate = _.isEmpty(start_data_value) ? moment().local().endOf('week').subtract(14 * 6, 'days') : moment(start_data_value);
     const endDate = _.isEmpty(end_data_value) ? moment().local().endOf('week') : moment(end_data_value);
@@ -100,9 +101,11 @@ drawHistogram = (start_data_value, end_data_value, period_value) => {
         const periodStart = _.cloneDeep(periodStartPivot);
         const periodEnd = periodStartPivot.add(period, 'days');
         const list = _.filter(cardsInfo, cardInfo => {
+            console.log('cardInfo in cardsInfo filter: ', cardInfo);
             const dateLastActivityOfCard = moment(cardInfo.dateLastActivity);
             return periodStart.isBefore(dateLastActivityOfCard) && periodEnd.isAfter(dateLastActivityOfCard) && _.get(cardInfo, 'demandChangeCount');
         });
+        console.log('list: ', list);
         const cardCount = list.length;
         let changeCount = 0;
         _.forEach(list, singleCard => {
