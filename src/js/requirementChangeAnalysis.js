@@ -52,11 +52,15 @@ t.cards('id', 'idList', 'labels', 'name', 'dateLastActivity')
                 .then(demandChangeCount => {
                     cardsInfo = [...cardsInfo, {...cardInfo, demandChangeCount}];
                 })
-            itemsProcessed++;
-            if(itemsProcessed === array.length) {
-                drawPieChart();
-                drawHistogram();
-            }
+                .then(() => {
+                        itemsProcessed++;
+                        if (itemsProcessed === array.length) {
+                            drawPieChart();
+                            drawHistogram();
+                        }
+                    }
+                );
+
         });
         console.log('cardsInfo: ', cardsInfo);
 
@@ -157,7 +161,7 @@ drawPieChart = () => {
         dataSet = {...dataSet, [label.name]: list};
     });
     _.forEach(listsInfo, listInfo => {
-       const list = _.filter(cardsInfo, cardInfo => cardInfo.idList === listsInfo.id);
+        const list = _.filter(cardsInfo, cardInfo => cardInfo.idList === listsInfo.id);
         dataSetByList = {...dataSetByList, [listInfo.name]: list};
     });
     const data = calculatedemandChangeCountAndCardCountAsSource(dataSet);
