@@ -12,7 +12,7 @@ var chartDom = document.getElementById('charts');
 var myChart = echarts.init(chartDom);
 var option;
 
-var chartByListDom = document.getElementById('chartByList');
+var chartByListDom = document.getElementById('charts-by-list');
 var chartByList = echarts.init(chartByListDom);
 var optionByList;
 
@@ -166,7 +166,7 @@ drawPieChart = () => {
     const data = calculateDemandChangeCountAndCardCountAsSource(dataSet);
     const dataByList = calculateDemandChangeCountAndCardCountAsSource(dataSetByList);
     option = generatePieChartOption(data);
-    optionByList = generatePieChartOption(data);
+    optionByList = generatePieChartOption(dataByList);
     myChart.setOption(option);
     chartByList.setOption(optionByList);
 }
