@@ -47,9 +47,9 @@ t.cards('id', 'idList', 'labels', 'name', 'dateLastActivity')
     .then(cards => {
         console.log('cards: ', cards);
         cards.forEach(cardInfo => {
-            t.get(cardInfo.id, 'shared', 'requirementChangeCount')
-                .then(requirementChangeCount => {
-                    cardsInfo = [...cardsInfo, {...cardInfo, requirementChangeCount}];
+            t.get(cardInfo.id, 'shared', 'demandChangeCount')
+                .then(demandChangeCount => {
+                    cardsInfo = [...cardsInfo, {...cardInfo, demandChangeCount}];
                 })
         });
         drawPieChart();
@@ -99,7 +99,7 @@ drawHistogram = (start_data_value, end_data_value, period_value) => {
         const cardCount = list.length;
         let changeCount = 0;
         _.forEach(list, singleCard => {
-            const singleCount = _.get(singleCard, 'requirementChangeCount', 0);
+            const singleCount = _.get(singleCard, 'demandChangeCount', 0);
             changeCount += singleCount;
         });
         console.log('periodEnd: ', periodEnd.format('yyyy/MM/DD').toString());
@@ -161,8 +161,8 @@ drawPieChart = () => {
         dataSetByList = {...dataSetByList, [listInfo.name]: list};
     });
     console.log('dataSetByList: ', dataSetByList);
-    const data = calculateRequirementChangeCountAndCardCountAsSource(dataSet);
-    const dataByList = calculateRequirementChangeCountAndCardCountAsSource(dataSetByList);
+    const data = calculatedemandChangeCountAndCardCountAsSource(dataSet);
+    const dataByList = calculatedemandChangeCountAndCardCountAsSource(dataSetByList);
     console.log('dataByList: ', dataByList);
     option = generatePieChartOption(data);
     myChart.setOption(option);
@@ -210,13 +210,13 @@ generatePieChartOption = data => {
     return pieChartOption;
 }
 
-calculateRequirementChangeCountAndCardCountAsSource = dataSet => {
+calculatedemandChangeCountAndCardCountAsSource = dataSet => {
     const _ = require('lodash');
     let data = [];
     _.forEach(dataSet, (value, key) => {
         let changeCount = 0;
         _.forEach(value, singleCard => {
-            const singleCount = _.get(singleCard, 'requirementChangeCount', 0);
+            const singleCount = _.get(singleCard, 'demandChangeCount', 0);
             changeCount += singleCount;
         });
         data = [...data, {name: key, value: changeCount}];
