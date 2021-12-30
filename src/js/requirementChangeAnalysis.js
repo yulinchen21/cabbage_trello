@@ -7,10 +7,15 @@ let listsInfo = {};
 const t = window.TrelloPowerUp.iframe();
 
 var echarts = require('echarts');
-const _ = require("lodash");
+
 var chartDom = document.getElementById('charts');
 var myChart = echarts.init(chartDom);
 var option;
+
+var chartByListDom = document.getElementById('chartByList');
+var chartByList = echarts.init(chartByListDom);
+var optionByList;
+
 var histogramDom = document.getElementById('histogram');
 var myHistogram = echarts.init(histogramDom);
 option = {
@@ -38,7 +43,6 @@ option = {
 t.board('labels').then(res => {
     const _ = require('lodash');
     labelSet = _.filter(res.labels, label => label.name !== '');
-    console.log('labelSet: ', labelSet);
 });
 t.lists('all').then(lists => {
     listsInfo = lists;
@@ -46,7 +50,6 @@ t.lists('all').then(lists => {
 t.cards('id', 'idList', 'labels', 'name', 'dateLastActivity')
     .then(cards => {
         let itemsProcessed = 0;
-        console.log('cards: ', cards);
         cards.forEach((cardInfo, index, array) => {
             t.get(cardInfo.id, 'shared', 'demandChangeCount')
                 .then(demandChangeCount => {
@@ -62,14 +65,11 @@ t.cards('id', 'idList', 'labels', 'name', 'dateLastActivity')
                 );
 
         });
-        console.log('cardsInfo outside: ', cardsInfo);
-
     });
 
 onConfirm = () => {
     const _ = require('lodash');
     const moment = require('moment');
-    console.log('cardsInfo: ', cardsInfo);
     const start_data_value = document.getElementById("start-date").value;
     const end_data_value = document.getElementById("end-date").value;
     const period_value = document.getElementById("period").value;
@@ -92,7 +92,6 @@ drawHistogram = (start_data_value, end_data_value, period_value) => {
     const _ = require('lodash');
     const moment = require('moment');
     let source = [['cycle', 'cards count', 'changes count']];
-    console.log('cardsInfo in drawHistogram: ', cardsInfo);
     const period = period_value ? _.toNumber(period_value) : 14;
     const startDate = _.isEmpty(start_data_value) ? moment().local().endOf('week').subtract(14 * 6, 'days') : moment(start_data_value);
     const endDate = _.isEmpty(end_data_value) ? moment().local().endOf('week') : moment(end_data_value);
@@ -101,7 +100,6 @@ drawHistogram = (start_data_value, end_data_value, period_value) => {
         const periodStart = _.cloneDeep(periodStartPivot);
         const periodEnd = periodStartPivot.add(period, 'days');
         const list = _.filter(cardsInfo, cardInfo => {
-            console.log('cardInfo in cardsInfo filter: ', cardInfo);
             const dateLastActivityOfCard = moment(cardInfo.dateLastActivity);
             return periodStart.isBefore(dateLastActivityOfCard) && periodEnd.isAfter(dateLastActivityOfCard) && _.get(cardInfo, 'demandChangeCount');
         });
@@ -155,7 +153,6 @@ generateHistogramOption = source => {
 
 drawPieChart = () => {
     const _ = require('lodash');
-    console.log('cardsInfo: ', cardsInfo);
     _.forEach(labelSet, label => {
         const list = _.filter(cardsInfo, cardInfo => {
             return _.find(cardInfo.labels, singleLabel => singleLabel.name === label.name)
@@ -163,19 +160,15 @@ drawPieChart = () => {
         dataSet = {...dataSet, [label.name]: list};
     });
     _.forEach(listsInfo, listInfo => {
-        console.log('listInfo: ', listInfo);
-        console.log('dataSetByList: ', dataSetByList);
         const list = _.filter(cardsInfo, cardInfo => cardInfo.idList === listInfo.id);
-        console.log('list after filter: ', list);
-        console.log('listInfo after filter: ', listInfo);
         dataSetByList = {...dataSetByList, [listInfo.name]: list};
     });
-    const data = calculatedemandChangeCountAndCardCountAsSource(dataSet);
-    console.log('dataSetByList: ', dataSetByList);
-    const dataByList = calculatedemandChangeCountAndCardCountAsSource(dataSetByList);
-    console.log('dataByList: ', dataByList);
+    const data = calculateDemandChangeCountAndCardCountAsSource(dataSet);
+    const dataByList = calculateDemandChangeCountAndCardCountAsSource(dataSetByList);
     option = generatePieChartOption(data);
+    optionByList = generatePieChartOption(data);
     myChart.setOption(option);
+    chartByList.setOption(optionByList);
 }
 
 generatePieChartOption = data => {
@@ -220,7 +213,7 @@ generatePieChartOption = data => {
     return pieChartOption;
 }
 
-calculatedemandChangeCountAndCardCountAsSource = dataSet => {
+calculateDemandChangeCountAndCardCountAsSource = dataSet => {
     const _ = require('lodash');
     let data = [];
     _.forEach(dataSet, (value, key) => {
