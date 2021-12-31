@@ -93,7 +93,7 @@ drawHistogram = (start_data_value, end_data_value, period_value) => {
     const moment = require('moment');
     let source = [['cycle', 'cards count', 'changes count']];
     const period = period_value ? _.toNumber(period_value) : 14;
-    const startDate = _.isEmpty(start_data_value) ? moment().local().endOf('week').subtract(14 * 6, 'days') : moment(start_data_value);
+    const startDate = _.isEmpty(start_data_value) ? moment().local().startOf('week').subtract(14 * 6 - 7, 'days') : moment(start_data_value);
     const endDate = _.isEmpty(end_data_value) ? moment().local().endOf('week') : moment(end_data_value);
     let periodStartPivot = startDate;
     while (endDate.isAfter(periodStartPivot)) {
