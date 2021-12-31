@@ -109,6 +109,8 @@ drawHistogram = (start_data_value, end_data_value, period_value) => {
             const singleCount = _.get(singleCard, 'demandChangeCount', 0);
             changeCount += singleCount;
         });
+        console.log('periodStart: ', periodStart.format('yyyy/MM/DD HH:mm:ss.SSS').toString());
+        console.log('periodEnd: ', periodEnd.format('yyyy/MM/DD HH:mm:ss.SSS').toString());
         source = [...source, [`${periodStart.format('yyyy/MM/DD')}~${periodEnd.format('yyyy/MM/DD')}`, cardCount, changeCount]];
     }
     const histogramOption = generateHistogramOption(source);
